@@ -1,0 +1,25 @@
+.typewriter {
+  display: inline-block;
+  position: relative;
+}
+
+.cursor {
+  animation: blink 1s infinite;
+  color: #667eea;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Dark mode cursor */
+.dark .cursor {
+  color: #64b5f6;
+}
