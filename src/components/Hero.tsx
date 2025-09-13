@@ -28,7 +28,7 @@ export default function Hero() {
         <div class="hero-content">
           <div class="hero-text">
             <h1 class="hero-title">
-              Hi, I'm <span class="highlight">John Doe</span>
+              Hi, I'm <span class="highlight">Jeff Modjo</span>
             </h1>
             <h2 class="hero-subtitle">
               <TypeWriter texts={texts} speed={100} deleteSpeed={50} pauseTime={2000} />

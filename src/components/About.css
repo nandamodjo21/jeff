@@ -55,6 +55,7 @@
 
 .about-image {
   animation: fadeInRight 0.8s ease-out;
+  min-height: 100vh; /* ✅ supaya sticky card bekerja */
 }
 
 .about-card {
@@ -84,6 +85,7 @@
 
 .timeline {
   position: relative;
+  z-index: 0;
 }
 
 .timeline::before {
@@ -94,12 +96,14 @@
   bottom: 0;
   width: 2px;
   background: linear-gradient(to bottom, #667eea, #764ba2);
+  z-index: 0; /* ✅ garis selalu di belakang */
 }
 
 .timeline-item {
   position: relative;
   margin-bottom: 30px;
   padding-left: 50px;
+  z-index: 1;
 }
 
 .timeline-dot {
@@ -127,12 +131,15 @@
   line-height: 1.5;
 }
 
-@media (max-width: 768px) {
+/* ✅ RESPONSIVE FIXES */
+@media (max-width: 992px) {
   .about-content {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+}
 
+@media (max-width: 768px) {
   .about-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -147,7 +154,7 @@
   }
 
   .about-card {
-    position: static;
+    position: static; /* ✅ disable sticky di layar kecil */
   }
 
   .card-content {
@@ -172,5 +179,6 @@
     left: 7px;
     width: 12px;
     height: 12px;
+    top: 5px; /* ✅ posisi lebih pas di layar kecil */
   }
 }
