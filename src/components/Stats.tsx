@@ -11,7 +11,7 @@ interface Stat {
 }
 
 export default function Stats() {
-  const [isVisible, setIsVisible] = createSignal(false)
+  const [, setIsVisible] = createSignal(false)
 
   const stats: Stat[] = [
     {

@@ -13,7 +13,7 @@ interface Testimonial {
 
 export default function Testimonial() {
   const [currentIndex, setCurrentIndex] = createSignal(0)
-  const [isAutoPlay, setIsAutoPlay] = createSignal(true)
+  const [isAutoPlay] = createSignal(true)
 
   const testimonials: Testimonial[] = [
     {
@@ -95,7 +95,7 @@ export default function Testimonial() {
                 <p class="testimonial-company">{currentTestimonial().company}</p>
               </div>
               <div class="testimonial-rating">
-                {Array.from({ length: currentTestimonial().rating }, (_, i) => (
+                {Array.from({ length: currentTestimonial().rating }, (_) => (
                   <span class="star">⭐</span>
                 ))}
               </div>

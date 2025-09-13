@@ -1,4 +1,4 @@
-import { createSignal, createContext, useContext, JSX } from 'solid-js'
+import { createSignal, createContext, useContext, type JSX } from 'solid-js'
 import './Toast.css'
 
 interface Toast {

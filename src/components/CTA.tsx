@@ -2,7 +2,7 @@ import { createSignal } from 'solid-js'
 import './CTA.css'
 
 export default function CTA() {
-  const [isHovered, setIsHovered] = createSignal(false)
+  const [, setIsHovered] = createSignal(false)
 
   const scrollToContact = () => {
     const element = document.getElementById('contact')

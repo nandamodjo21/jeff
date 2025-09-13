@@ -2,50 +2,66 @@ import { createSignal, onMount } from 'solid-js'
 import './Skills.css'
 
 export default function Skills() {
-  const [isVisible, setIsVisible] = createSignal(false)
-  const [activeCategory, setActiveCategory] = createSignal('frontend')
 
+
+  type Skill = {
+    name: string;
+    level: number;
+    icon: string;
+  };
+
+  type Category = {
+    title: string;
+    skills: Skill[];
+  };
+
+// 2. Definisikan skillCategories dengan type aman
   const skillCategories = {
     frontend: {
-      title: 'Frontend Development',
+      title: "Frontend Development",
       skills: [
-        { name: 'React', level: 95, icon: '⚛️' },
-        { name: 'TypeScript', level: 90, icon: '📘' },
-        { name: 'JavaScript', level: 95, icon: '🟨' },
-        { name: 'HTML5', level: 98, icon: '🌐' },
-        { name: 'CSS3', level: 92, icon: '🎨' },
-        { name: 'Vue.js', level: 85, icon: '💚' },
-        { name: 'Angular', level: 80, icon: '🔴' },
-        { name: 'Sass/SCSS', level: 88, icon: '💅' }
+        { name: "React", level: 95, icon: "⚛️" },
+        { name: "TypeScript", level: 90, icon: "📘" },
+        { name: "JavaScript", level: 95, icon: "🟨" },
+        { name: "HTML5", level: 98, icon: "🌐" },
+        { name: "CSS3", level: 92, icon: "🎨" },
+        { name: "Vue.js", level: 85, icon: "💚" },
+        { name: "Angular", level: 80, icon: "🔴" },
+        { name: "Sass/SCSS", level: 88, icon: "💅" }
       ]
     },
     backend: {
-      title: 'Backend Development',
+      title: "Backend Development",
       skills: [
-        { name: 'Node.js', level: 92, icon: '🟢' },
-        { name: 'Python', level: 88, icon: '🐍' },
-        { name: 'Express.js', level: 90, icon: '🚀' },
-        { name: 'MongoDB', level: 85, icon: '🍃' },
-        { name: 'PostgreSQL', level: 87, icon: '🐘' },
-        { name: 'Redis', level: 80, icon: '🔴' },
-        { name: 'Docker', level: 82, icon: '🐳' },
-        { name: 'AWS', level: 75, icon: '☁️' }
+        { name: "Node.js", level: 92, icon: "🟢" },
+        { name: "Python", level: 88, icon: "🐍" },
+        { name: "Express.js", level: 90, icon: "🚀" },
+        { name: "MongoDB", level: 85, icon: "🍃" },
+        { name: "PostgreSQL", level: 87, icon: "🐘" },
+        { name: "Redis", level: 80, icon: "🔴" },
+        { name: "Docker", level: 82, icon: "🐳" },
+        { name: "AWS", level: 75, icon: "☁️" }
       ]
     },
     tools: {
-      title: 'Tools & Technologies',
+      title: "Tools & Technologies",
       skills: [
-        { name: 'Git', level: 95, icon: '📝' },
-        { name: 'Webpack', level: 85, icon: '📦' },
-        { name: 'Vite', level: 90, icon: '⚡' },
-        { name: 'Figma', level: 80, icon: '🎨' },
-        { name: 'VS Code', level: 98, icon: '💻' },
-        { name: 'Linux', level: 85, icon: '🐧' },
-        { name: 'Jest', level: 88, icon: '🧪' },
-        { name: 'Cypress', level: 82, icon: '🌲' }
+        { name: "Git", level: 95, icon: "📝" },
+        { name: "Webpack", level: 85, icon: "📦" },
+        { name: "Vite", level: 90, icon: "⚡" },
+        { name: "Figma", level: 80, icon: "🎨" },
+        { name: "VS Code", level: 98, icon: "💻" },
+        { name: "Linux", level: 85, icon: "🐧" },
+        { name: "Jest", level: 88, icon: "🧪" },
+        { name: "Cypress", level: 82, icon: "🌲" }
       ]
     }
-  }
+  } satisfies Record<string, Category>;
+
+// 3. Ambil key type otomatis
+  type CategoryKey = keyof typeof skillCategories;
+  const [activeCategory, setActiveCategory] = createSignal<CategoryKey>("frontend");
+  const [isVisible, setIsVisible] = createSignal(false);
 
   onMount(() => {
     const observer = new IntersectionObserver(
@@ -75,36 +91,39 @@ export default function Skills() {
           <p class="section-subtitle">
             Here are the technologies and tools I work with
           </p>
-          
+
           <div class="skills-categories">
-            {Object.entries(skillCategories).map(([key, category]) => (
-              <button
-                class={`category-btn ${activeCategory() === key ? 'active' : ''}`}
-                onClick={() => setActiveCategory(key)}
-              >
-                {category.title}
-              </button>
-            ))}
+            {Object.entries(skillCategories).map(([key, category]) => {
+              const typedKey = key as CategoryKey;
+              return (
+                  <button
+                      class={`category-btn ${activeCategory() === typedKey ? 'active' : ''}`}
+                      onClick={() => setActiveCategory(typedKey)}
+                  >
+                    {category.title}
+                  </button>
+              );
+            })}
           </div>
-          
+
           <div class="skills-grid">
-            {skillCategories[activeCategory()].skills.map((skill) => (
-              <div class="skill-item">
-                <div class="skill-header">
-                  <span class="skill-icon">{skill.icon}</span>
-                  <span class="skill-name">{skill.name}</span>
-                  <span class="skill-percentage">{skill.level}%</span>
+            {skillCategories[activeCategory()].skills.map((skill: any) => (
+                <div class="skill-item">
+                  <div class="skill-header">
+                    <span class="skill-icon">{skill.icon}</span>
+                    <span class="skill-name">{skill.name}</span>
+                    <span class="skill-percentage">{skill.level}%</span>
+                  </div>
+                  <div class="skill-bar">
+                    <div
+                        class="skill-progress"
+                        style={`width: ${isVisible() ? skill.level : 0}%`}
+                    ></div>
+                  </div>
                 </div>
-                <div class="skill-bar">
-                  <div 
-                    class="skill-progress" 
-                    style={`width: ${isVisible() ? skill.level : 0}%`}
-                  ></div>
-                </div>
-              </div>
             ))}
           </div>
-          
+
           <div class="skills-summary">
             <div class="summary-card">
               <h3>Frontend Focus</h3>

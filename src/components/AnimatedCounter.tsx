@@ -36,7 +36,7 @@ export default function AnimatedCounter(props: AnimatedCounterProps) {
 
   const animateCounter = () => {
     const duration = props.duration || 2000
-    const start = 0
+    // const start = 0
     const end = props.end
     const increment = end / (duration / 16) // 60fps
 

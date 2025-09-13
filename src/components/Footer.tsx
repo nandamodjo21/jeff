@@ -1,8 +1,8 @@
-import { createSignal, onMount } from 'solid-js'
+import { createSignal } from 'solid-js'
 import './Footer.css'
 
 export default function Footer() {
-  const [currentYear, setCurrentYear] = createSignal(new Date().getFullYear())
+  const [currentYear] = createSignal(new Date().getFullYear())
 
   const quickLinks = [
     { name: 'Home', href: '#home' },
